@@ -3,24 +3,47 @@ package com.example.projet_tp_dam;
 public class Module {
 
 	private String name ;
-	private double noteTp;
-	private double noteTd;
+	private int noteTp;
+	private int noteTd;
+	private int noteControl ;
 
 
-	public Module(String name , double noteTd , double noteTp){
+	public Module(String name){
 		this.name = name;
-		this.noteTp = noteTp;
-		this.noteTd = noteTd;
-
-	}//
-
-	public double getNoteTp() {
+		this.noteTd = 0;
+		this.noteTp = 0;
+		this.noteControl = 0;
+	}
+	public int getNoteTp() {
 		return noteTp;
 	}
 
-	public double getNoteTd() {
+	public int getNoteTd() {
 		return noteTd;
 	}
+	public void setNoteTp(int noteTp) {
+		this.noteTp = noteTp;
+	}
+	public void setNoteTd(int noteTd) {
+		this.noteTd = noteTd;
+	}
+	public int getNoteControl() {
+		return noteControl;
+	}
+
+	public void setNoteControl(int noteControl) {
+		this.noteControl = noteControl;
+	}
+
+	/*public Module(String name , double noteTd , double noteTp , double noteControl){
+		this.name = name;
+		this.noteTp = noteTp;
+		this.noteTd = noteTd;
+		this.noteControl = noteControl;
+
+	}//*/
+
+
 
 	public char getType() {
 		return type;
@@ -30,7 +53,6 @@ public class Module {
 		this.moyenne = moyenne;
 	}
 
-	private double noteControl ;
 	private char type = '3';
 	private int coefficient ;
 	private int poidsControl ;
@@ -83,14 +105,7 @@ public class Module {
 		return moyenne;
 	}
 	
-	public void setNoteTp(double noteTp) {
-		this.noteTp = noteTp;
-	}
-	
-	
-	public void setNoteTd(double noteTd) {
-		this.noteTd = noteTd;
-	}
+
 	
 
 	
@@ -98,13 +113,7 @@ public class Module {
 		this.type = type;
 	}
 
-	public double getNoteControl() {
-		return noteControl;
-	}
 
-	public void setNoteControl(double noteControl) {
-		this.noteControl = noteControl;
-	}
 	
 	
 	

@@ -16,7 +16,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 
+
+
 public class MainActivity extends AppCompatActivity {
+
+
+    private ListView listView;
+    private TextView totalSumTextView;
+    private ArrayList<Module> rowDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +37,26 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.tdText);
         EditText poidsExam = findViewById(R.id.modulePoidsExam);
         EditText poidsTrav = findViewById(R.id.modulePoidsTraveaux);
-*/
+        */
+        listView = findViewById(R.id.listView);
+        totalSumTextView = findViewById(R.id.semester);
+
+        // Initialize data for 4 rows
+        rowDataList = new ArrayList<>();
+        //for (int i = 0; i < 4; i++) {
+            rowDataList.add(new Module("algo"));
+            rowDataList.add(new Module("algebre"));
+            rowDataList.add(new Module("analyse"));
+        //}
+
+        // Set up adapter with total sum listener
+        ModuleAdapter adapter = new ModuleAdapter(this, rowDataList, totalSum -> {
+            totalSumTextView.setText("Total Sum: " + totalSum);
+        });
+        listView.setAdapter(adapter);
+
+
+        /*
         ListView listView = findViewById(R.id.listView);
 
         //create data
@@ -54,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
         ModuleAdapter moduleAdapter = new ModuleAdapter(this,R.layout.row_module,arrayList);
 
         listView.setAdapter(moduleAdapter);
-/*
+        EditText editTextTd = findViewById(R.id.noteTd);
+
         tdCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-*/
+        */
 
     }
 }

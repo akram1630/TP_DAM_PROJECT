@@ -1,10 +1,13 @@
 package com.example.projet_tp_dam;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,50 +16,156 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class ModuleAdapter extends ArrayAdapter<Module> {
+public class ModuleAdapter extends BaseAdapter {
 
     private Context mContext;
-    private int mResource;
+    //private int mResource;
+    private ArrayList<Module> rowDataList;
+    private TotalSumListener listener; // Listener for total sum updates
 
 
 
-    public ModuleAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Module> objects) {
-        super(context, resource, objects);
+
+    public ModuleAdapter(Context context, ArrayList<Module> rowDataList, TotalSumListener listener) {
         this.mContext = context;
-        this.mResource = resource;
+        this.rowDataList = rowDataList;
+        this.listener = listener;
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public int getCount() {
+        return rowDataList.size();
+    }
 
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+    @Override
+    public Object getItem(int position) {
+        return rowDataList.get(position);
+    }
 
-        convertView = layoutInflater.inflate(mResource , parent , false);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-        EditText editTextTd = convertView.findViewById(R.id.noteTd);
-        EditText editTextTp = convertView.findViewById(R.id.noteTp);
-        EditText editTextControl = convertView.findViewById(R.id.noteControl);
-        TextView textViewName = convertView.findViewById(R.id.moduleNameCalc);
-        TextView textViewTotal= convertView.findViewById(R.id.moduleTotal);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.row_module, parent, false);
+            holder = new ViewHolder();
+            holder.editTextTd = convertView.findViewById(R.id.noteTd);
+            holder.editTextTp= convertView.findViewById(R.id.noteTp);
+            holder.editTextControl = convertView.findViewById(R.id.noteControl);
+            holder.sumTextView = convertView.findViewById(R.id.moduleTotal);
+            holder.nameModule = convertView.findViewById(R.id.moduleNameCalc);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        Module module = rowDataList.get(position);
 
 
-        String TD = String.valueOf(getItem(position).getNoteTd());
-        editTextTd.setText(TD);
 
-        String Tp = String.valueOf(getItem(position).getNoteTp());
-        editTextTp.setText(Tp);
+        // Set initial values for EditTexts and TextView
+        holder.nameModule.setText(module.getName());
+        holder.editTextTd.setText(String.valueOf(module.getNoteTd()));
+        holder.editTextTp.setText(String.valueOf(module.getNoteTp()));
+        holder.editTextControl.setText(String.valueOf(module.getNoteControl()));
+        holder.sumTextView.setText("Sum: " + (module.getNoteTd() + module.getNoteTp()+ module.getNoteControl()) );
 
-        String Control = String.valueOf(getItem(position).getNoteControl());
-        editTextControl.setText(Control);
 
-        String moyenne = String.valueOf(getItem(position).getMoyenne());
-        textViewTotal.setText(moyenne);
+        // Add TextWatcher for EditTextA
+        holder.editTextTd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-        textViewName.setText(getItem(position).getName());
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    int value = Integer.parseInt(s.toString());
+                    module.setNoteTd(value);
+                } catch (NumberFormatException e) {
+                    module.setNoteTd(0);
+                }
+                updateSum(holder, module);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+
+        holder.editTextTp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    int value = Integer.parseInt(s.toString());
+                    module.setNoteTp(value);
+                } catch (NumberFormatException e) {
+                    module.setNoteTp(0);
+                }
+                updateSum(holder, module);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        holder.editTextControl.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    int value = Integer.parseInt(s.toString());
+                    module.setNoteControl(value);
+                } catch (NumberFormatException e) {
+                    module.setNoteControl(0);
+                }
+                updateSum(holder, module);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
 
 
         return convertView;
+    }
+
+    //////////////////////////////////////////////////////////////////////
+
+
+    private int calculateTotalSum() {
+        int totalSum = 0;
+        for (Module module : rowDataList) {
+            totalSum += module.getNoteTd() + module.getNoteTp() + module.getNoteControl();
+        }
+        return totalSum/4;
+    }
+
+    private void updateSum(ViewHolder holder, Module module) {
+        int ModuleSum = module.getNoteTd() + module.getNoteTp() + module.getNoteControl();
+        holder.sumTextView.setText("Sum: " + ModuleSum);
+        listener.onTotalSumUpdated(calculateTotalSum());
+    }
+
+    private static class ViewHolder {
+        EditText editTextTd, editTextTp, editTextControl;
+        TextView nameModule , sumTextView;
+    }
+
+    // Define the TotalSumListener interface
+    public interface TotalSumListener {
+        void onTotalSumUpdated(int totalSum);
     }
 }
