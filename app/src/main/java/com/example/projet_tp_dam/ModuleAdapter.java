@@ -28,7 +28,7 @@ public class ModuleAdapter extends BaseAdapter {
 
 
 
-    public ModuleAdapter(Context context, ArrayList<Module> rowDataList, TotalSumListener listener) {
+    public ModuleAdapter(Context context, ArrayList<Module> rowDataList, TotalSumListener listener ) {
         this.mContext = context;
         this.rowDataList = rowDataList;
         this.listener = listener;
@@ -54,6 +54,7 @@ public class ModuleAdapter extends BaseAdapter {
         ViewHolder holder;
 
         if (convertView == null) {
+
             convertView = LayoutInflater.from(mContext).inflate(R.layout.row_module, parent, false);
             holder = new ViewHolder();
             holder.editTextTd = convertView.findViewById(R.id.noteTd);
@@ -70,12 +71,13 @@ public class ModuleAdapter extends BaseAdapter {
 
 
 
+
         // Set initial values for EditTexts and TextView
         holder.nameModule.setText(module.getName());
         holder.editTextTd.setText(String.valueOf(module.getNoteTd()));
         holder.editTextTp.setText(String.valueOf(module.getNoteTp()));
         holder.editTextControl.setText(String.valueOf(module.getNoteControl()));
-        holder.sumTextView.setText("Sum: " + (module.getNoteTd() + module.getNoteTp()+ module.getNoteControl()) );
+        holder.sumTextView.setText("Sum: " + (module.getNoteTd() + module.getNoteTp()+ module.getNoteControl())  );
 
 
         // Add TextWatcher for EditTextA
@@ -86,7 +88,7 @@ public class ModuleAdapter extends BaseAdapter {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    int value = Integer.parseInt(s.toString());
+                    double value = Double.parseDouble(s.toString()) *0.2;
                     module.setNoteTd(value);
                 } catch (NumberFormatException e) {
                     module.setNoteTd(0);
@@ -106,7 +108,7 @@ public class ModuleAdapter extends BaseAdapter {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    int value = Integer.parseInt(s.toString());
+                    double value = Double.parseDouble(s.toString())*0.2;
                     module.setNoteTp(value);
                 } catch (NumberFormatException e) {
                     module.setNoteTp(0);
@@ -125,7 +127,7 @@ public class ModuleAdapter extends BaseAdapter {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    int value = Integer.parseInt(s.toString());
+                    double value = Double.parseDouble(s.toString())*0.6;
                     module.setNoteControl(value);
                 } catch (NumberFormatException e) {
                     module.setNoteControl(0);
@@ -142,19 +144,23 @@ public class ModuleAdapter extends BaseAdapter {
         return convertView;
     }
 
-    //////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
-
-    private int calculateTotalSum() {
-        int totalSum = 0;
+    // Define the TotalSumListener interface
+    public interface TotalSumListener {
+        void onTotalSumUpdated(double totalSum);
+    }
+    private double calculateTotalSum() {
+        double totalSum = 0;
         for (Module module : rowDataList) {
-            totalSum += module.getNoteTd() + module.getNoteTp() + module.getNoteControl();
+            totalSum +=( module.getNoteTd() + module.getNoteTp() + module.getNoteControl()) * module.getCoefficient();
         }
-        return totalSum/4;
+        //return totalSum/4;
+        return totalSum ;
     }
 
     private void updateSum(ViewHolder holder, Module module) {
-        int ModuleSum = module.getNoteTd() + module.getNoteTp() + module.getNoteControl();
+        double ModuleSum = module.getNoteTd() + module.getNoteTp() + module.getNoteControl();
         holder.sumTextView.setText("Sum: " + ModuleSum);
         listener.onTotalSumUpdated(calculateTotalSum());
     }
@@ -163,9 +169,42 @@ public class ModuleAdapter extends BaseAdapter {
         EditText editTextTd, editTextTp, editTextControl;
         TextView nameModule , sumTextView;
     }
+//////////////////////////////////////////////////////////
 
-    // Define the TotalSumListener interface
-    public interface TotalSumListener {
-        void onTotalSumUpdated(int totalSum);
-    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

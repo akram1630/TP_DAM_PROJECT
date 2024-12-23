@@ -44,16 +44,24 @@ public class MainActivity extends AppCompatActivity {
         // Initialize data for 4 rows
         rowDataList = new ArrayList<>();
         //for (int i = 0; i < 4; i++) {
-            rowDataList.add(new Module("algo"));
-            rowDataList.add(new Module("algebre"));
-            rowDataList.add(new Module("analyse"));
+            rowDataList.add(new Module("algo",4,40,60));
+            rowDataList.add(new Module("algebre",4,40,60));
+            rowDataList.add(new Module("analyse",4,40,60));
         //}
-
+        int sumCoefficient=0    ;
+        for(Module m : rowDataList)
+            sumCoefficient += m.getCoefficient();
         // Set up adapter with total sum listener
-        ModuleAdapter adapter = new ModuleAdapter(this, rowDataList, totalSum -> {
-            totalSumTextView.setText("Total Sum: " + totalSum);
+        int finalSumCoefficient = sumCoefficient;
+        ModuleAdapter adapter = new ModuleAdapter(this, rowDataList, totalSum   -> {
+            totalSumTextView.setText("Total Sum: " + totalSum/ finalSumCoefficient+"----"+finalSumCoefficient);
         });
+        // Declare a variable to store the totalCoef
+        // Use a mutable container to store the latest totalCoef
+
+// Set the adapter for the listView
         listView.setAdapter(adapter);
+
 
 
         /*

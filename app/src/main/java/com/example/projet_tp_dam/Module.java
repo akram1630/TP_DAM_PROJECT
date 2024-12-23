@@ -3,35 +3,38 @@ package com.example.projet_tp_dam;
 public class Module {
 
 	private String name ;
-	private int noteTp;
-	private int noteTd;
-	private int noteControl ;
+	private double noteTp;
+	private double noteTd;
+	private double noteControl ;
 
 
-	public Module(String name){
+	public Module(String name , int coefficient , int poidsControl , int poidsTdAndTp){
 		this.name = name;
+		this.coefficient = coefficient;
+		this.poidsControl = poidsControl;
+		this.poidsTdAndTp = poidsTdAndTp;
 		this.noteTd = 0;
 		this.noteTp = 0;
 		this.noteControl = 0;
 	}
-	public int getNoteTp() {
+	public double getNoteTp() {
 		return noteTp;
 	}
 
-	public int getNoteTd() {
+	public double getNoteTd() {
 		return noteTd;
 	}
-	public void setNoteTp(int noteTp) {
+	public void setNoteTp(double noteTp) {
 		this.noteTp = noteTp;
 	}
-	public void setNoteTd(int noteTd) {
+	public void setNoteTd(double noteTd) {
 		this.noteTd = noteTd;
 	}
-	public int getNoteControl() {
+	public double getNoteControl() {
 		return noteControl;
 	}
 
-	public void setNoteControl(int noteControl) {
+	public void setNoteControl(double noteControl) {
 		this.noteControl = noteControl;
 	}
 
