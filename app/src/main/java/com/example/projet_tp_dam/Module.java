@@ -2,12 +2,29 @@ package com.example.projet_tp_dam;
 
 public class Module {
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	private int id;
 	private String name ;
 	private double noteTp;
 	private double noteTd;
 	private double noteControl ;
 
-
+	public Module(){};
 	public Module(String name , int coefficient , int poidsControl , int poidsTdAndTp){
 		this.name = name;
 		this.coefficient = coefficient;
@@ -48,15 +65,13 @@ public class Module {
 
 
 
-	public char getType() {
-		return type;
-	}
+
 
 	public void setMoyenne(double moyenne) {
 		this.moyenne = moyenne;
 	}
 
-	private char type = '3';
+	private String  type = "3";
 	private int coefficient ;
 	private int poidsControl ;
 	private int poidsTdAndTp ;	
@@ -95,13 +110,13 @@ public class Module {
 	}
 	
 	public void setMoyenne() {
-		if (type=='1')
-			moyenne = noteControl;
-		if(type=='2')
-			moyenne = poidsControl * 0.01  * noteControl + poidsTdAndTp* 0.01 * noteTd ;
-		if(type=='3')
-			moyenne = poidsControl * 0.01 * noteControl + poidsTdAndTp* 0.01 * ((noteTd+noteTp)/2) ;
-		
+//		if (type=='1')
+//			moyenne = noteControl;
+//		if(type=='2')
+//			moyenne = poidsControl * 0.01  * noteControl + poidsTdAndTp* 0.01 * noteTd ;
+//		if(type=='3')
+//			moyenne = poidsControl * 0.01 * noteControl + poidsTdAndTp* 0.01 * ((noteTd+noteTp)/2) ;
+//
 	}
 	
 	public double getMoyenne() {
@@ -112,9 +127,7 @@ public class Module {
 	
 
 	
-	public void setType(char type) {
-		this.type = type;
-	}
+
 
 
 	

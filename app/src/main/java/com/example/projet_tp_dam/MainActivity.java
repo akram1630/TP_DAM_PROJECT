@@ -1,7 +1,10 @@
 package com.example.projet_tp_dam;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,7 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,14 +32,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*
-        EditText moduleName = findViewById(R.id.moduleName);
-        CheckBox tdCheck = findViewById(R.id.tdChek);
-        CheckBox tpCheck = findViewById(R.id.tpChek);
-        Button addButtom = findViewById(R.id.addButton);
-        TextView textView = findViewById(R.id.tdText);
-        EditText poidsExam = findViewById(R.id.modulePoidsExam);
-        EditText poidsTrav = findViewById(R.id.modulePoidsTraveaux);
+
+
+        DatabaseHandler db = new DatabaseHandler(this);
+        Log.d("Insert: ", "Inserting ..");
+        db.addModule(new Module("AKRAAAAAAAAM",4,40,60));
+        // Reading all contacts
+        Log.d("Reading: ", "Reading all contacts..");
+        List<Module> modules = db.getAllModule();
+        //int s= db.getContactsCount();
+        //Log.d("Number", String.valueOf(s));
+        /*ListView list = (ListView)findViewById(R.id.maliste);
+        ArrayAdapter<String> tableau = new ArrayAdapter<String>(
+                this, R.layout.montexte);
+        for (Contact cn : contacts) {
+            String log = "Id: " + cn.getID() + " ,Name: " + cn.getName() + " ,Phone: " +
+                    cn.getPhoneNumber();
+            // Writing Contacts to log
+            tableau.add(log);
+            Log.d("Name: ", log);
+        }
+        list.setAdapter(tableau);
         */
         listView = findViewById(R.id.listView);
         totalSumTextView = findViewById(R.id.semester);
@@ -44,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         // Initialize data for 4 rows
         rowDataList = new ArrayList<>();
         //for (int i = 0; i < 4; i++) {
+            rowDataList.add(modules.get(0)) ;
             rowDataList.add(new Module("algo",4,40,60));
             rowDataList.add(new Module("algebre",4,40,60));
             rowDataList.add(new Module("analyse",4,40,60));
@@ -56,6 +73,28 @@ public class MainActivity extends AppCompatActivity {
         ModuleAdapter adapter = new ModuleAdapter(this, rowDataList, totalSum   -> {
             totalSumTextView.setText("Total Sum: " + totalSum/ finalSumCoefficient+"----"+finalSumCoefficient);
         });
+
+        Button  btn = findViewById(R.id.goCrud);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext() , MainActivity2.class );
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
         // Declare a variable to store the totalCoef
         // Use a mutable container to store the latest totalCoef
 
