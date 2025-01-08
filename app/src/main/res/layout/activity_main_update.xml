@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivityUpdate">
+
+    <EditText
+        android:layout_marginVertical="30dp"
+        android:id="@+id/moduleUp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Nom du Module"
+        />
+
+    <EditText
+        android:id="@+id/moduleCoefUp"
+        android:layout_below="@+id/moduleUp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Coefficient du Module"
+        />
+    <Button
+        android:id="@+id/btnUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="update"
+        android:layout_below="@+id/moduleCoefUp"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

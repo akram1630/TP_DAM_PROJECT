@@ -1,7 +1,10 @@
 package com.example.projet_tp_dam;
 
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,20 +44,44 @@ public class CrudAdapter extends ArrayAdapter<Module> {
 
         TextView txtDes = convertView.findViewById(R.id.coefId);
 
-        //Button btnDelete = convertView.findViewById(R.id.deleteId);
+        Button btnDelete = convertView.findViewById(R.id.deleteId);
+        Button btnUpdate = convertView.findViewById(R.id.updateId);
 
 
         txtName.setText(""+getItem(position).getName());
 
         txtDes.setText(""+getItem(position).getCoefficient());
-/*
+
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Module m = getItem(position);
+                DatabaseHandler db = new DatabaseHandler(mContext);
+                db.deleteModule(m.getId());
+                // Remove the item from the list and update the adapter
+                remove(m);
+                notifyDataSetChanged();
             }
         });
-*/
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MainActivityUpdate.class);
+                Module m = getItem(position);
+
+                intent.putExtra("moduleId", String.valueOf( m.getId() ));
+                intent.putExtra("moduleName", String.valueOf( m.getName() ));
+                intent.putExtra("moduleCoef", String.valueOf( m.getCoefficient() ));
+
+                if (!(mContext instanceof android.app.Activity)) {
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+
+                mContext.startActivity(intent);
+            }
+        });
+
         return convertView;
     }
 }

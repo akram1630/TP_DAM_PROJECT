@@ -98,4 +98,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return contact list
         return contactList;
     }
+    public void deleteModule(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_MODULE, KEY_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
+    public void updateModule(int id, String newName, int newCoefficient) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Create a ContentValues object to hold the updated values
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, newName);
+        values.put(KEY_COEFFICIENT, newCoefficient);
+
+        // Update the table with the new values
+        db.update(TABLE_MODULE, values, KEY_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close(); // Close the database connection
+    }
+
 }

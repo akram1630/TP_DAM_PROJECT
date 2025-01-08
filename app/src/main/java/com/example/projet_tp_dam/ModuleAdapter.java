@@ -11,13 +11,14 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Locale;
-
+                                   //for realTime
 public class ModuleAdapter extends BaseAdapter {
 
     private Context mContext;
@@ -72,7 +73,6 @@ public class ModuleAdapter extends BaseAdapter {
 
 
 
-        // Set initial values for EditTexts and TextView
         holder.nameModule.setText(module.getName());
         holder.editTextTd.setText(String.valueOf(module.getNoteTd()));
         holder.editTextTp.setText(String.valueOf(module.getNoteTp()));
@@ -80,7 +80,6 @@ public class ModuleAdapter extends BaseAdapter {
         holder.sumTextView.setText("Sum: " + (module.getNoteTd() + module.getNoteTp()+ module.getNoteControl())  );
 
 
-        // Add TextWatcher for EditTextA
         holder.editTextTd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -88,7 +87,9 @@ public class ModuleAdapter extends BaseAdapter {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
+
                     double value = Double.parseDouble(s.toString()) *0.2;
+
                     module.setNoteTd(value);
                 } catch (NumberFormatException e) {
                     module.setNoteTd(0);
@@ -146,7 +147,6 @@ public class ModuleAdapter extends BaseAdapter {
 
 ////////////////////////////////////////////////////////////////////////////
 
-    // Define the TotalSumListener interface
     public interface TotalSumListener {
         void onTotalSumUpdated(double totalSum);
     }
@@ -161,7 +161,7 @@ public class ModuleAdapter extends BaseAdapter {
 
     private void updateSum(ViewHolder holder, Module module) {
         double ModuleSum = module.getNoteTd() + module.getNoteTp() + module.getNoteControl();
-        holder.sumTextView.setText("Sum: " + ModuleSum);
+        holder.sumTextView.setText("Sum: " + String.format("%.2f",ModuleSum));
         listener.onTotalSumUpdated(calculateTotalSum());
     }
 

@@ -1,32 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <ListView
-        android:id="@+id/listCrud"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
--->
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/main"
+android:id="@+id/main2"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:paddingVertical="20dp"
@@ -117,11 +95,21 @@ tools:context=".MainActivity">
     android:layout_height="wrap_content"
     android:layout_below="@id/modulePoidsExam"
 />
+    <Button
+        android:id="@+id/goButton"
+        android:layout_centerHorizontal="true"
+        android:text="calcul now"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/addButton"
+        />
 
 
 
 <ListView
-    android:layout_below="@id/addButton"
+    android:layout_below="@id/goButton"
     android:id="@+id/listCrud"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

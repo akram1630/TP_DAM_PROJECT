@@ -10,33 +10,50 @@
 
     <TextView
         android:id="@+id/txtName"
+        android:maxLines="1"
+        android:textSize="20sp"
         android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Title"
+    android:textStyle="bold"
         android:text="Name"
     />
+
 
     <TextView
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15sp"
         android:text="Coef:"
     />
 
     <TextView
         android:id="@+id/coefId"
-        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"/>
 
     <Button
         android:id="@+id/deleteId"
-        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
         android:text="delete"
         />
+    <Button
+        android:id="@+id/updateId"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="update"
+        />
+
+
 
 </LinearLayout>
